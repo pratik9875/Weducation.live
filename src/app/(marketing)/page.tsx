@@ -46,6 +46,21 @@ export default function HomePage() {
               "radial-gradient(60% 50% at 50% 0%, var(--color-brand-50) 0%, transparent 70%)",
           }}
         />
+        {/* Corner dot-grid accent */}
+        <div
+          className="pointer-events-none absolute -right-10 top-0 -z-10 h-80 w-80"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, var(--color-brand-400) 1.5px, transparent 1.5px)",
+            backgroundSize: "22px 22px",
+            maskImage: "radial-gradient(circle at 100% 0%, black 0%, transparent 70%)",
+            WebkitMaskImage: "radial-gradient(circle at 100% 0%, black 0%, transparent 70%)",
+            opacity: 0.35,
+          }}
+        />
+        {/* Soft glow behind the phone mockup */}
+        <div className="pointer-events-none absolute right-[6%] top-1/3 -z-10 h-72 w-72 rounded-full bg-brand-200/40 blur-3xl" />
+
         <div className="mx-auto max-w-6xl px-6 pt-20 pb-16">
           <div className="grid items-center gap-16 lg:grid-cols-[1.1fr_1fr]">
             <div className="text-center lg:text-left">
