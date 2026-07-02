@@ -33,12 +33,17 @@ const adminModules = [
 
 function ModuleList({ title, items }: { title: string; items: string[] }) {
   return (
-    <div>
-      <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-      <ul className="mt-4 space-y-2">
+    <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      <h3 className="text-base font-semibold text-slate-900">{title}</h3>
+      <ul className="mt-4 space-y-1">
         {items.map((item, i) => (
-          <li key={item} className="flex gap-3 text-sm text-slate-600">
-            <span className="font-mono text-slate-400">{String(i + 1).padStart(2, "0")}</span>
+          <li
+            key={item}
+            className="flex gap-3 rounded-md px-2 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50"
+          >
+            <span className="font-mono text-xs text-brand-500">
+              {String(i + 1).padStart(2, "0")}
+            </span>
             {item}
           </li>
         ))}
@@ -49,31 +54,47 @@ function ModuleList({ title, items }: { title: string; items: string[] }) {
 
 export default function ProductPage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-16">
-      <h1 className="text-3xl font-bold text-slate-900">The Platform</h1>
-      <p className="mt-4 max-w-2xl text-slate-600">
-        A single system covering the entire admission journey — the student experience
-        inside WhatsApp, and the internal Staff / Admin portals your team runs it from.
-      </p>
+    <div>
+      <div className="border-b border-slate-200 bg-slate-50">
+        <div className="mx-auto max-w-6xl px-6 py-16">
+          <span className="text-xs font-semibold uppercase tracking-wide text-brand-600">
+            Platform
+          </span>
+          <h1 className="mt-2 text-4xl font-bold tracking-tight text-slate-900">
+            Everything the admission journey needs
+          </h1>
+          <p className="mt-4 max-w-2xl text-lg text-slate-600">
+            A single system covering the entire admission journey — the student experience
+            inside WhatsApp, and the internal Staff / Admin portals your team runs it from.
+          </p>
+        </div>
+      </div>
 
-      <section className="mt-16">
+      <section className="mx-auto max-w-6xl px-6 py-16">
         <h2 className="text-xl font-semibold text-slate-900">Student Journey (inside WhatsApp)</h2>
         <ol className="mt-6 grid gap-3 sm:grid-cols-2">
           {studentJourney.map((step, i) => (
             <li
               key={step}
-              className="flex gap-3 rounded-lg border border-slate-200 p-4 text-sm text-slate-700"
+              className="flex items-center gap-4 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-700 shadow-sm"
             >
-              <span className="font-mono text-emerald-600">{String(i + 1).padStart(2, "0")}</span>
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-50 font-mono text-xs font-semibold text-brand-700">
+                {i + 1}
+              </span>
               {step}
             </li>
           ))}
         </ol>
       </section>
 
-      <section className="mt-16 grid gap-12 sm:grid-cols-2">
-        <ModuleList title="Staff Portal" items={staffModules} />
-        <ModuleList title="Admin Portal" items={adminModules} />
+      <section className="border-t border-slate-200 bg-slate-50 py-16">
+        <div className="mx-auto max-w-6xl px-6">
+          <h2 className="text-xl font-semibold text-slate-900">Staff & Admin Portals</h2>
+          <div className="mt-6 grid gap-6 sm:grid-cols-2">
+            <ModuleList title="Staff Portal" items={staffModules} />
+            <ModuleList title="Admin Portal" items={adminModules} />
+          </div>
+        </div>
       </section>
     </div>
   );
