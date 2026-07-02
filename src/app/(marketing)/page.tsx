@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WhatsAppPreview } from "@/components/marketing/WhatsAppPreview";
 
 const modules = [
   {
@@ -45,35 +46,41 @@ export default function HomePage() {
               "radial-gradient(60% 50% at 50% 0%, var(--color-brand-50) 0%, transparent 70%)",
           }}
         />
-        <div className="mx-auto max-w-6xl px-6 pt-24 pb-20 text-center">
-          <span className="inline-flex items-center rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
-            B2B SaaS for University Admissions
-          </span>
-          <h1 className="mx-auto mt-6 max-w-3xl text-4xl font-bold tracking-tight text-slate-900 sm:text-6xl">
-            Your admission funnel,{" "}
-            <span className="text-brand-600">moving at WhatsApp speed.</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
-            From first enquiry to fee payment, the entire student journey happens inside a
-            conversation that speaks in your university&apos;s own voice — white-labeled,
-            end to end.
-          </p>
-          <div className="mt-10 flex justify-center gap-4">
-            <Link
-              href="/request-demo"
-              className="rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-600/25 transition-colors hover:bg-brand-700"
-            >
-              Request a Demo
-            </Link>
-            <Link
-              href="/product"
-              className="rounded-md border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition-colors hover:border-slate-400 hover:bg-slate-50"
-            >
-              Explore the Platform
-            </Link>
+        <div className="mx-auto max-w-6xl px-6 pt-20 pb-16">
+          <div className="grid items-center gap-16 lg:grid-cols-[1.1fr_1fr]">
+            <div className="text-center lg:text-left">
+              <span className="inline-flex items-center rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
+                B2B SaaS for University Admissions
+              </span>
+              <h1 className="mt-6 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+                Your admission funnel,{" "}
+                <span className="text-brand-600">moving at WhatsApp speed.</span>
+              </h1>
+              <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600 lg:mx-0">
+                From first enquiry to fee payment, the entire student journey happens inside
+                a conversation that speaks in your university&apos;s own voice —
+                white-labeled, end to end.
+              </p>
+              <div className="mt-10 flex justify-center gap-4 lg:justify-start">
+                <Link
+                  href="/request-demo"
+                  className="rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-600/25 transition-colors hover:bg-brand-700"
+                >
+                  Request a Demo
+                </Link>
+                <Link
+                  href="/product"
+                  className="rounded-md border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition-colors hover:border-slate-400 hover:bg-slate-50"
+                >
+                  Explore the Platform
+                </Link>
+              </div>
+            </div>
+
+            <WhatsAppPreview />
           </div>
 
-          <dl className="mx-auto mt-20 grid max-w-3xl grid-cols-1 gap-8 border-t border-slate-200 pt-10 sm:grid-cols-3">
+          <dl className="mx-auto mt-20 grid max-w-3xl grid-cols-1 gap-8 border-t border-slate-200 pt-10 text-center sm:grid-cols-3">
             {stats.map((stat) => (
               <div key={stat.label}>
                 <dt className="text-3xl font-bold text-slate-900">{stat.value}</dt>
