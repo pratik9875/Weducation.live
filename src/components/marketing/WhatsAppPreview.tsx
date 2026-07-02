@@ -7,7 +7,7 @@ type Message = { from: "bot" | "student"; text: string; time: string };
 const conversation: Message[] = [
   {
     from: "bot",
-    text: "👋 Hi! I'm PA Inamdar University's Admission Assistant. What's your name?",
+    text: "👋 Hi! I'm University's Admission Assistant. What's your name?",
     time: "10:02",
   },
   { from: "student", text: "Priya Sharma", time: "10:02" },
@@ -96,19 +96,17 @@ export function WhatsAppPreview() {
           {/* Dynamic island */}
           <div className="absolute left-1/2 top-2.5 z-20 h-6 w-[88px] -translate-x-1/2 rounded-full bg-black" />
 
-          {/* WhatsApp header */}
-          <div className="relative z-10 flex items-center gap-2.5 bg-brand-700 px-4 pb-3 pt-9 text-white">
+          {/* WhatsApp header — WhatsApp's own signature dark teal */}
+          <div className="relative z-10 flex items-center gap-2.5 bg-[#075e54] px-4 pb-3 pt-9 text-white">
             <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 shrink-0 text-white/90">
               <path d="M15.5 3.5 7 12l8.5 8.5 1.4-1.4L9.8 12l7.1-7.1z" />
             </svg>
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold ring-2 ring-white/10">
-              PA
+              U
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-[13px] font-semibold leading-tight">
-                PA Inamdar University
-              </p>
-              <p className="text-[11px] text-brand-100">{typing ? "typing…" : "online"}</p>
+              <p className="truncate text-[13px] font-semibold leading-tight">University</p>
+              <p className="text-[11px] text-white/70">{typing ? "typing…" : "online"}</p>
             </div>
             <div className="flex items-center gap-4 text-white/90">
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-[18px] w-[18px]">
@@ -175,7 +173,7 @@ export function WhatsAppPreview() {
                 <path d="M12 15.5a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v6a3.5 3.5 0 0 0 3.5 3.5zM17.5 12a5.5 5.5 0 0 1-11 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12z" />
               </svg>
             </div>
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white shadow-sm">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#25d366] text-white shadow-sm">
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
                 <path d="M2 21l21-9L2 3v7l15 2-15 2z" />
               </svg>
