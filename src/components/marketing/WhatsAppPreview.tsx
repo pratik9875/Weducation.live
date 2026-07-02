@@ -84,42 +84,46 @@ export function WhatsAppPreview() {
 
   return (
     <div className="mx-auto w-[300px]">
-      {/* Phone frame */}
-      <div className="relative rotate-1 rounded-[3rem] bg-gradient-to-b from-slate-800 to-slate-950 p-2.5 shadow-2xl ring-1 ring-black/10">
-        {/* Side buttons */}
-        <div className="absolute -left-[3px] top-24 h-8 w-[3px] rounded-l bg-slate-700" />
-        <div className="absolute -left-[3px] top-36 h-14 w-[3px] rounded-l bg-slate-700" />
-        <div className="absolute -right-[3px] top-32 h-20 w-[3px] rounded-r bg-slate-700" />
+      {/* Phone frame — level, no tilt */}
+      <div className="relative rounded-[2.75rem] bg-gradient-to-b from-slate-700 via-slate-900 to-slate-950 p-[10px] shadow-[0_30px_60px_-15px_rgba(15,23,42,0.35)] ring-1 ring-black/10">
+        {/* Side buttons, symmetric */}
+        <div className="absolute -left-px top-[88px] h-7 w-[3px] rounded-l-sm bg-slate-600" />
+        <div className="absolute -left-px top-[124px] h-12 w-[3px] rounded-l-sm bg-slate-600" />
+        <div className="absolute -left-px top-[180px] h-12 w-[3px] rounded-l-sm bg-slate-600" />
+        <div className="absolute -right-px top-[124px] h-16 w-[3px] rounded-r-sm bg-slate-600" />
 
-        <div className="relative overflow-hidden rounded-[2.4rem] bg-[#efeae2] ring-1 ring-black/20">
+        <div className="relative overflow-hidden rounded-[2.15rem] bg-[#efeae2] ring-1 ring-black/25">
           {/* Dynamic island */}
-          <div className="absolute left-1/2 top-2 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-black" />
+          <div className="absolute left-1/2 top-2.5 z-20 h-6 w-[88px] -translate-x-1/2 rounded-full bg-black" />
 
           {/* WhatsApp header */}
-          <div className="relative z-10 flex items-center gap-2.5 bg-brand-700 px-4 pb-3 pt-8 text-white">
+          <div className="relative z-10 flex items-center gap-2.5 bg-brand-700 px-4 pb-3 pt-9 text-white">
             <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 shrink-0 text-white/90">
               <path d="M15.5 3.5 7 12l8.5 8.5 1.4-1.4L9.8 12l7.1-7.1z" />
             </svg>
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold ring-2 ring-white/10">
               PA
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-[13px] font-semibold leading-tight">
                 PA Inamdar University
               </p>
-              <p className="text-[11px] text-brand-100">
-                {typing ? "typing…" : "online"}
-              </p>
+              <p className="text-[11px] text-brand-100">{typing ? "typing…" : "online"}</p>
             </div>
-            <svg viewBox="0 0 24 24" fill="currentColor" className="h-[18px] w-[18px] shrink-0 text-white/90">
-              <path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11z" />
-            </svg>
+            <div className="flex items-center gap-4 text-white/90">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-[18px] w-[18px]">
+                <path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11z" />
+              </svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+                <path d="M6.6 10.8c1.4 2.8 3.7 5 6.5 6.5l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .8-.2 1z" />
+              </svg>
+            </div>
           </div>
 
           {/* Chat body */}
           <div
             ref={scrollRef}
-            className="relative flex h-[430px] flex-col gap-1.5 overflow-hidden px-3 py-4"
+            className="relative flex h-[440px] flex-col gap-1.5 overflow-hidden px-3 py-4"
             style={{
               backgroundImage:
                 "radial-gradient(circle at 20px 20px, rgba(0,0,0,0.035) 1.5px, transparent 0)",
@@ -161,10 +165,17 @@ export function WhatsAppPreview() {
 
           {/* Input bar */}
           <div className="flex items-center gap-2 border-t border-black/5 bg-[#f0ede8] px-3 py-2.5">
-            <div className="flex-1 rounded-full bg-white px-3 py-1.5 text-[13px] text-slate-400 shadow-sm">
-              Type a message
+            <div className="flex flex-1 items-center gap-2 rounded-full bg-white px-3 py-1.5 shadow-sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4 shrink-0 text-slate-400">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M8.5 14s1.2 1.5 3.5 1.5 3.5-1.5 3.5-1.5M9 9.5h.01M15 9.5h.01" strokeLinecap="round" />
+              </svg>
+              <span className="flex-1 text-[13px] text-slate-400">Type a message</span>
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 shrink-0 text-slate-400">
+                <path d="M12 15.5a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v6a3.5 3.5 0 0 0 3.5 3.5zM17.5 12a5.5 5.5 0 0 1-11 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12z" />
+              </svg>
             </div>
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white shadow-sm">
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
                 <path d="M2 21l21-9L2 3v7l15 2-15 2z" />
               </svg>
@@ -172,8 +183,8 @@ export function WhatsAppPreview() {
           </div>
 
           {/* Home indicator */}
-          <div className="flex justify-center bg-[#f0ede8] pb-2">
-            <div className="h-1 w-24 rounded-full bg-slate-900/70" />
+          <div className="flex justify-center bg-[#f0ede8] pb-2 pt-0.5">
+            <div className="h-1 w-28 rounded-full bg-slate-900/70" />
           </div>
         </div>
       </div>
