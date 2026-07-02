@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const links = [
@@ -9,8 +10,8 @@ export function Navbar() {
   return (
     <header className="border-b border-slate-200">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="text-lg font-semibold tracking-tight text-slate-900">
-          WEducation<span className="text-emerald-600">.live</span>
+        <Link href="/" className="flex items-center">
+          <Image src="/logo.png" alt="WEducation" width={150} height={50} priority />
         </Link>
         <div className="flex items-center gap-8">
           {links.map((link) => (
