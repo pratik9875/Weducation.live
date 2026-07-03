@@ -24,7 +24,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="grid gap-10 sm:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <Image src="/logo.png" alt="WEducation" width={130} height={44} className="opacity-90" />
+            <Image src="/logo.png" alt="WEducation" width={170} height={57} className="opacity-90" />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-500">
               White-labeled WhatsApp admissions for higher-ed institutions — the entire
               student journey, one conversation.

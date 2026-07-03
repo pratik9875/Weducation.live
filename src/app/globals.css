@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
@@ -43,5 +44,64 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Continuous gentle float for the hero phone mockup */
+@keyframes phoneFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.6deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(0.6deg);
+  }
+}
+
+/* Slower, offset drift for the notification chips around the phone */
+@keyframes chipFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.8);
+  }
+}
+
+.animate-phone-float {
+  animation: phoneFloat 6s ease-in-out infinite;
+}
+
+.animate-chip-float {
+  animation: chipFloat 5s ease-in-out infinite;
+}
+
+.animate-chip-float-delayed {
+  animation: chipFloat 7s ease-in-out 1.2s infinite;
+}
+
+.animate-pulse-dot {
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-phone-float,
+  .animate-chip-float,
+  .animate-chip-float-delayed,
+  .animate-pulse-dot {
+    animation: none;
   }
 }
