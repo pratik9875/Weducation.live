@@ -21,19 +21,25 @@ export default function LoginPage() {
     const form = new FormData(event.currentTarget);
     const supabase = createClient();
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: String(form.get("email")),
       password: String(form.get("password")),
     });
 
-    setLoading(false);
-
     if (error) {
+      setLoading(false);
       setError(error.message);
       return;
     }
 
-    router.push("/staff");
+    const { data: profile } = await supabase
+      .from("users")
+      .select("role")
+      .eq("id", data.user.id)
+      .single();
+
+    setLoading(false);
+    router.push(profile?.role === "admin" ? "/admin" : "/staff");
     router.refresh();
   }
 

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { LayoutDashboard, MessageSquareText, UserCog } from "lucide-react";
+import { BookOpen, IndianRupee, LayoutDashboard, MessageSquareText, UserCog } from "lucide-react";
 import { getStaffUser } from "@/lib/auth";
 import { Sidebar, type SidebarGroup } from "@/components/dashboard/Sidebar";
 import { Topbar } from "@/components/dashboard/Topbar";
@@ -23,6 +23,16 @@ const groups: SidebarGroup[] = [
         href: "/admin/users",
         label: "User & Role Management",
         icon: <UserCog className={iconClass} />,
+      },
+      {
+        href: "/admin/courses",
+        label: "Course Management",
+        icon: <BookOpen className={iconClass} />,
+      },
+      {
+        href: "/admin/payments",
+        label: "Payments",
+        icon: <IndianRupee className={iconClass} />,
       },
       {
         href: "/admin/templates",
