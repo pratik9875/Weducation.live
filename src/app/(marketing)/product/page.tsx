@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { HeroStats } from "@/components/marketing/HeroStats";
 import { WhatsAppPreview } from "@/components/marketing/WhatsAppPreview";
+
+export const metadata: Metadata = {
+  title: "Product",
+  description:
+    "See how WEducation.live runs the entire admissions journey inside WhatsApp — lead capture, applications, document verification, and fee collection in one system.",
+  alternates: { canonical: "/product" },
+};
 
 const studentJourney = [
   {

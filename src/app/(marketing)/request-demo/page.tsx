@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import { DemoRequestForm } from "@/components/marketing/DemoRequestForm";
+
+export const metadata: Metadata = {
+  title: "Request a Demo",
+  description:
+    "See WEducation.live's AI Admission Assistant and Staff & Admin portals live, and get a rollout timeline scoped to your intake calendar.",
+  alternates: { canonical: "/request-demo" },
+};
 
 const bullets = [
   "See the AI Admission Assistant handle a real enquiry, live",

@@ -12,10 +12,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "WEducation.live — WhatsApp Admissions Platform",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "WEducation.live — WhatsApp Admissions Platform",
+    template: "%s — WEducation.live",
+  },
   description:
     "B2B SaaS admissions platform for universities — the entire student journey inside WhatsApp.",
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({

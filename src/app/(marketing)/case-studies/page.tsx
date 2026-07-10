@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Case Studies",
+  description:
+    "Real results from universities running admissions on WEducation.live — faster response times, higher conversion, and less manual follow-up.",
+  alternates: { canonical: "/case-studies" },
+};
+
 export default function CaseStudiesPage() {
   return (
     <div>
