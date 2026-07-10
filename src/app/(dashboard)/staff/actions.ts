@@ -124,6 +124,40 @@ export async function updateApplicationStatus(formData: FormData) {
   revalidatePath("/staff");
 }
 
+// Creates a payments row for an application at its course fee, so a UPI
+// payment link/QR can be generated against it. Actual capture is confirmed
+// manually (see admin's updatePaymentStatus) until Razorpay is connected.
+export async function createPaymentRequest(formData: FormData) {
+  const user = await requireStaff(APPLICATION_REVIEW_ROLES);
+  const applicationId = String(formData.get("application_id") ?? "");
+  if (!applicationId) throw new Error("Missing application.");
+
+  const supabase = await createClient();
+  const { data: application, error: fetchError } = await supabase
+    .from("applications")
+    .select("id, courses(fee)")
+    .eq("id", applicationId)
+    .eq("university_id", user.university_id)
+    .single();
+
+  if (fetchError || !application) throw new Error("Application not found.");
+
+  const course = application.courses as unknown as { fee: number } | null;
+  if (!course) throw new Error("This application has no course fee to charge.");
+
+  const { error } = await supabase.from("payments").insert({
+    university_id: user.university_id,
+    application_id: applicationId,
+    amount: course.fee,
+    status: "created",
+  });
+
+  if (error) throw new Error(`Could not create payment request: ${error.message}`);
+
+  await audit(user, "payment.create_request", `applications/${applicationId}`);
+  revalidatePath(`/staff/applications/${applicationId}`);
+}
+
 export async function verifyDocument(formData: FormData) {
   const user = await requireStaff(DOCUMENT_VERIFY_ROLES);
   const documentId = String(formData.get("document_id") ?? "");

@@ -12,7 +12,8 @@ import type {
 } from "@/types/database";
 import { Badge } from "@/components/dashboard/Badge";
 import { InlineSelectForm } from "@/components/dashboard/InlineSelectForm";
-import { updateApplicationStatus } from "../../actions";
+import { generateUpiLink, generateUpiQrDataUrl } from "@/lib/integrations/upi";
+import { createPaymentRequest, updateApplicationStatus } from "../../actions";
 
 const STATUSES: ApplicationStatus[] = [
   "draft",
@@ -81,6 +82,22 @@ export default async function ApplicationDetailPage({
 
   const docRows = (documents as DocumentRecord[] | null) ?? [];
   const paymentRows = (payments as Payment[] | null) ?? [];
+
+  const upiByPaymentId = new Map<string, { link: string; qr: string }>();
+  for (const payment of paymentRows) {
+    if (payment.status !== "created" && payment.status !== "authorized") continue;
+    try {
+      const link = generateUpiLink({
+        amount: Number(payment.amount),
+        note: `Fee for ${app.application_number ?? app.id.slice(0, 8)}`,
+        transactionRefId: payment.id,
+      });
+      const qr = await generateUpiQrDataUrl(link);
+      upiByPaymentId.set(payment.id, { link, qr });
+    } catch {
+      // UPI_ID not configured — silently skip, the status badge still shows.
+    }
+  }
 
   return (
     <div>
@@ -162,45 +179,82 @@ export default async function ApplicationDetailPage({
         </section>
 
         <section>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-            Payments
-          </h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              Payments
+            </h2>
+            {canReview && paymentRows.length === 0 && app.courses && (
+              <form action={createPaymentRequest}>
+                <input type="hidden" name="application_id" value={app.id} />
+                <button
+                  type="submit"
+                  className="rounded-md bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-brand-700"
+                >
+                  Request payment
+                </button>
+              </form>
+            )}
+          </div>
           <div className="mt-3 space-y-3">
             {paymentRows.length === 0 && (
               <div className="rounded-xl border border-dashed border-slate-300 bg-white p-6 text-center text-sm text-slate-400">
-                No payments recorded yet.
+                {app.courses
+                  ? "No payments recorded yet."
+                  : "No payments recorded yet — this application has no course fee."}
               </div>
             )}
-            {paymentRows.map((payment) => (
-              <div
-                key={payment.id}
-                className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
-              >
-                <div className="flex items-center justify-between">
-                  <p className="font-medium text-slate-900">
-                    ₹{Number(payment.amount).toLocaleString("en-IN")}
+            {paymentRows.map((payment) => {
+              const upi = upiByPaymentId.get(payment.id);
+              return (
+                <div
+                  key={payment.id}
+                  className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+                >
+                  <div className="flex items-center justify-between">
+                    <p className="font-medium text-slate-900">
+                      ₹{Number(payment.amount).toLocaleString("en-IN")}
+                    </p>
+                    <Badge tone={PAYMENT_TONE[payment.status]}>{payment.status}</Badge>
+                  </div>
+                  <p className="mt-1 text-xs text-slate-500">
+                    {new Date(payment.created_at).toLocaleDateString()}
+                    {payment.gateway_ref ? ` · ref ${payment.gateway_ref}` : ""}
+                    {payment.receipt_url && (
+                      <>
+                        {" · "}
+                        <a
+                          href={payment.receipt_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="font-medium text-brand-700 hover:underline"
+                        >
+                          Receipt
+                        </a>
+                      </>
+                    )}
                   </p>
-                  <Badge tone={PAYMENT_TONE[payment.status]}>{payment.status}</Badge>
-                </div>
-                <p className="mt-1 text-xs text-slate-500">
-                  {new Date(payment.created_at).toLocaleDateString()}
-                  {payment.gateway_ref ? ` · ref ${payment.gateway_ref}` : ""}
-                  {payment.receipt_url && (
-                    <>
-                      {" · "}
-                      <a
-                        href={payment.receipt_url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="font-medium text-brand-700 hover:underline"
-                      >
-                        Receipt
-                      </a>
-                    </>
+                  {upi && (
+                    <div className="mt-3 flex items-center gap-4 border-t border-slate-100 pt-3">
+                      {/* eslint-disable-next-line @next/next/no-img-element -- data: URL from qrcode, not a static asset */}
+                      <img src={upi.qr} alt="UPI payment QR code" className="h-24 w-24" />
+                      <div className="text-xs text-slate-500">
+                        <p>Scan to pay via UPI, or share the link below.</p>
+                        <a
+                          href={upi.link}
+                          className="mt-1 block break-all font-medium text-brand-700 hover:underline"
+                        >
+                          {upi.link}
+                        </a>
+                        <p className="mt-2 text-slate-400">
+                          No gateway is connected yet — once the transfer is received,
+                          mark this payment as captured from Admin → Payments.
+                        </p>
+                      </div>
+                    </div>
                   )}
-                </p>
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
         </section>
       </div>
